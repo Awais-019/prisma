@@ -21,12 +21,18 @@ model User {
 }
 
 model Post {
-  id           String   @id @default(uuid())
+  id           String     @id @default(uuid())
   rating       Float
   createdAt    DateTime
   upatedAt     DateTime
-  author       User     @relation("WrittenPosts", fields: [authorId], references: [id])
+  author       User       @relation("WrittenPosts", fields: [authorId], references: [id])
   authorId     String
-  favoriteBy   User?     @relation("FavoritePosts", fields: [favoriteById], references: [id])
+  favoriteBy   User?      @relation("FavoritePosts", fields: [favoriteById], references: [id])
   favoriteById String?
+  categories   Category[]
+}
+
+model Category {
+  id    String @id @default(uuid())
+  posts Post[]
 }
