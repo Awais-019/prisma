@@ -13,11 +13,15 @@ datasource db {
 model User {
   id              String           @id @default(uuid())
   name            String
-  email           String
+  age             Int
+  email           String           @unique
   isAdmin         Boolean          @default(false)
   writtenPosts    Post[]           @relation("WrittenPosts")
   favoritePosts   Post[]           @relation("FavoritePosts")
   UserPreferences UserPreferences?
+
+  @@unique([age, name])
+  @@index([email])
 }
 
 model UserPreferences {
@@ -28,18 +32,22 @@ model UserPreferences {
 }
 
 model Post {
-  id           String     @id @default(uuid())
-  rating       Float
-  createdAt    DateTime
-  upatedAt     DateTime
-  author       User       @relation("WrittenPosts", fields: [authorId], references: [id])
-  authorId     String
-  favoriteBy   User?      @relation("FavoritePosts", fields: [favoriteById], references: [id])
-  favoriteById String?
-  categories   Category[]
+  id            String     @id @default(uuid())
+  title         String
+  averageRating Float
+  createdAt     DateTime   @default(now())
+  upatedAt      DateTime   @updatedAt
+  author        User       @relation("WrittenPosts", fields: [authorId], references: [id])
+  authorId      String
+  favoriteBy    User?      @relation("FavoritePosts", fields: [favoriteById], references: [id])
+  favoriteById  String?
+  categories    Category[]
+
+  // @@id([title, authorId])
 }
 
 model Category {
   id    String @id @default(uuid())
+  name  String @unique
   posts Post[]
 }
