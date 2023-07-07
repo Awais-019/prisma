@@ -8,8 +8,8 @@ async function main() {
   //       name: "Alice",
   //     },
   //   });
-  const users = await prisma.user.findMany();
-  console.log(users);
+  //   const users = await prisma.user.findMany();
+  await prisma.user.deleteMany();
 }
 
 main()
