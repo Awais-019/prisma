@@ -13,16 +13,12 @@ async function main() {
   //     name: "Alice",
   //   },
   // });
-  const user = await prisma.user.findMany({
+  const user = await prisma.user.update({
+    data: {
+      email: "alice1@test.com"
+    },
     where: {
-      userPreference: {
-        emailUpdates: false,
-      },
-      writtenPosts: {
-        every: {
-          title: "My first blog post",
-        },
-      },
+      email: "alice@test.com"
     },
   });
   // Advanced filtering
