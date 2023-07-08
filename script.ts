@@ -15,9 +15,13 @@ async function main() {
   // });
   const user = await prisma.user.findMany({
     where: {
-      name: {
-        in: ["Alice", "Bob"],
-        not: "Alice",
+      userPreference: {
+        emailUpdates: false,
+      },
+      writtenPosts: {
+        every: {
+          title: "My first blog post",
+        },
       },
     },
   });
