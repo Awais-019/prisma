@@ -13,14 +13,13 @@ async function main() {
   //     name: "Alice",
   //   },
   // });
-  const user = await prisma.user.update({
-    data: {
-      email: "alice1@test.com"
-    },
+  const user = await prisma.user.delete({
     where: {
-      email: "alice@test.com"
+      email: "alice1@test.com",
     },
   });
+  console.log(user);
+
   // Advanced filtering
   // not - not equal
   // in - in array
