@@ -15,15 +15,29 @@ async function main() {
   // });
   const user = await prisma.user.findMany({
     where: {
-      name: "Alice",
+      name: {
+        in: ["Alice", "Bob"],
+        not: "Alice",
+      },
     },
-    orderBy: {
-      age: "asc",
-    },
-    distinct: ["name"],
-    take: 10,
-    skip: 1,
   });
+  // Advanced filtering
+  // not - not equal
+  // in - in array
+  // notIn - not in array
+  // lt - less than
+  // lte - less than or equal
+  // gt - greater than
+  // gte - greater than or equal
+  // contains - contains string
+  // startsWith - starts with string
+  // endsWith - ends with string
+  // notContains - does not contain string
+  // notStartsWith - does not start with string
+  // notEndsWith - does not end with string
+  // AND - and
+  // OR - or
+  // NOT - not
   console.log(user);
 }
 
