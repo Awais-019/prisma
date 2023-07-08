@@ -1,29 +1,30 @@
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient({ log: ["query"] });
+const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.deleteMany();
-  // createMany to create multiple records at once
-  const user = await prisma.user.create({
-    data: {
+  // const user = await prisma.user.findUnique({
+  //   where: {
+  //     email: "alice@test.com",
+  //   },
+  // });
+  // const user = await prisma.user.findFirst({
+  //   where: {
+  //     name: "Alice",
+  //   },
+  // });
+  const user = await prisma.user.findMany({
+    where: {
       name: "Alice",
-      email: "alice@test.com",
-      age: 20,
-      userPreference: {
-        create: {
-          emailUpdates: true,
-        },
-      },
     },
-    select: {
-      name: true,
-      userPreference: {
-        select: { id: true },
-      },
+    orderBy: {
+      age: "asc",
     },
+    distinct: ["name"],
+    take: 10,
+    skip: 1,
   });
-  console.log("User created", user);
+  console.log(user);
 }
 
 main()
